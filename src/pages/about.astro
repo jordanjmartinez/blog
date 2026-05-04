@@ -1,0 +1,74 @@
+---
+import { Image } from 'astro:assets';
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import Sidebar from '../components/Sidebar.astro';
+import Headshot from '../assets/headshot.jpeg';
+import { SITE_TITLE } from '../consts';
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={`About | ${SITE_TITLE}`} description="A bit about me." />
+	</head>
+	<body>
+		<Header />
+		<main>
+			<div class="layout">
+				<section class="content">
+					<h1 class="page-title">About</h1>
+					<Image
+						src={Headshot}
+						alt="Jordan Martinez"
+						width={220}
+						height={220}
+						class="headshot"
+					/>
+					<p>
+						Hi, I'm Jordan. I graduated from the University of South Florida with a
+						degree in Information Technology, and I'm currently working in the field as
+						an IT professional.
+					</p>
+					<p>
+						I'm documenting my journey as I try to break into the field of cybersecurity. This blog is an honest record of that journey from the beginning.
+						I hope to look back at it one day and laugh at how naive I was. Maybe along
+						the way, my struggles and story will be useful to you, too.
+					</p>
+					<p>
+						The best way to reach me is by
+						<a href="mailto:contact@jordanmartinez.net">email</a>. I read every message
+						and try to respond when I can.
+					</p>
+				</section>
+				<Sidebar />
+			</div>
+		</main>
+		<Footer />
+
+		<style>
+			.page-title {
+				font-size: 1.9rem;
+				margin: 0 0 0.8em;
+				border-bottom: 3px solid var(--accent);
+				padding-bottom: 0.3em;
+			}
+			.headshot {
+				float: right;
+				margin: 0 0 1em 1.5em;
+				width: 220px;
+				height: 220px;
+				object-fit: cover;
+				border-radius: 50%;
+			}
+			@media (max-width: 720px) {
+				.headshot {
+					float: none;
+					display: block;
+					margin: 0 auto 1em;
+				}
+			}
+		</style>
+	</body>
+</html>

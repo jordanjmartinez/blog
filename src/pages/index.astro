@@ -1,0 +1,150 @@
+---
+import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import FormattedDate from '../components/FormattedDate.astro';
+import Header from '../components/Header.astro';
+import Sidebar from '../components/Sidebar.astro';
+import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+
+const posts = (await getCollection('blog')).sort(
+	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+	</head>
+	<body>
+		<Header />
+		<main>
+			<div class="layout">
+				<section class="content">
+					{
+						posts.map((post) => {
+							const paragraphs = (post.body ?? '')
+								.split(/\n\n+/)
+								.map((p) => p.trim())
+								.filter((p) => p && !p.startsWith('#') && !p.startsWith('!['))
+								.slice(0, 2);
+							return (
+								<article class="entry">
+									<header class="entry-header">
+										<h2 class="entry-title">
+											<a href={`/blog/${post.id}/`}>{post.data.title}</a>
+										</h2>
+										<p class="entry-meta">
+											<FormattedDate date={post.data.pubDate} />
+											<span class="badge">Article</span>
+										</p>
+									</header>
+									{post.data.heroImage && (
+										<a href={`/blog/${post.id}/`} class="entry-thumb">
+											<Image width={720} height={360} src={post.data.heroImage} alt="" />
+										</a>
+									)}
+									{paragraphs.length > 0 ? (
+										paragraphs.map((p) => <p class="entry-para">{p}</p>)
+									) : (
+										<p class="entry-para">{post.data.description}</p>
+									)}
+									<p class="entry-more">
+										<a href={`/blog/${post.id}/`}><span class="more-prefix">&gt;&gt;</span> Continue reading</a>
+									</p>
+								</article>
+							);
+						})
+					}
+				</section>
+				<Sidebar />
+			</div>
+		</main>
+		<Footer />
+
+		<style>
+			.entry {
+				padding-bottom: 1.8em;
+				margin-bottom: 1.8em;
+				border-bottom: 1px solid var(--rule);
+			}
+			.entry:last-child {
+				border-bottom: none;
+			}
+			.entry-title {
+				font-size: 1.7rem;
+				margin: 0 0 0.2em;
+				line-height: 1.2;
+			}
+			.entry-title a {
+				color: var(--ink);
+			}
+			.entry-title a:hover {
+				color: var(--accent);
+				text-decoration: none;
+			}
+			.entry-meta {
+				font-size: 0.85rem;
+				color: var(--muted);
+				margin: 0 0 0.8em;
+				font-family: var(--serif);
+			}
+			.entry-meta :global(time) {
+				color: #c4703a;
+				font-weight: 500;
+			}
+			.badge {
+				display: inline-block;
+				font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+				font-size: 0.65rem;
+				font-weight: 600;
+				letter-spacing: 0.5px;
+				color: #c4703a;
+				border: 1px solid #c4703a;
+				padding: 1px 6px;
+				margin-left: 0.7em;
+				vertical-align: 1px;
+			}
+			.entry-thumb {
+				display: block;
+				float: right;
+				margin: 0 0 0.6em 1.2em;
+				max-width: 240px;
+			}
+			.entry-thumb img {
+				display: block;
+				border: 1px solid var(--rule);
+			}
+			.entry-para {
+				margin: 0 0 0.8em;
+				line-height: 1.55;
+			}
+			.entry-more {
+				margin: 0;
+				clear: both;
+				font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+				font-size: 0.85rem;
+			}
+			.entry-more a {
+				color: var(--ink);
+			}
+			.entry-more a:hover {
+				color: #c4703a;
+				text-decoration: none;
+			}
+			.more-prefix {
+				color: #c4703a;
+				margin-right: 0.3em;
+			}
+			@media (max-width: 720px) {
+				.entry-thumb {
+					float: none;
+					margin: 0 0 0.6em;
+					max-width: 100%;
+				}
+			}
+		</style>
+	</body>
+</html>

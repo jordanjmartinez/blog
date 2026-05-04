@@ -1,0 +1,119 @@
+---
+import { getCollection } from 'astro:content';
+import BaseHead from '../../components/BaseHead.astro';
+import Footer from '../../components/Footer.astro';
+import FormattedDate from '../../components/FormattedDate.astro';
+import Header from '../../components/Header.astro';
+import Sidebar from '../../components/Sidebar.astro';
+import { SITE_DESCRIPTION, SITE_TITLE } from '../../consts';
+
+const posts = (await getCollection('blog')).sort(
+	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+
+const byYear = posts.reduce<Record<string, typeof posts>>((acc, post) => {
+	const year = post.data.pubDate.getFullYear().toString();
+	(acc[year] ||= []).push(post);
+	return acc;
+}, {});
+const years = Object.keys(byYear).sort((a, b) => Number(b) - Number(a));
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={`Archive | ${SITE_TITLE}`} description={SITE_DESCRIPTION} />
+	</head>
+	<body>
+		<Header />
+		<main>
+			<div class="layout">
+				<section class="content">
+					<h1 class="page-title">All Posts</h1>
+					<p class="page-intro">A complete archive of everything published, newest first.</p>
+
+					{
+						years.map((year) => (
+							<section class="year-section">
+								<h2 class="year-heading">{year}</h2>
+								<ul class="archive-list">
+									{byYear[year].map((post) => (
+										<li>
+											<span class="archive-date">
+												<FormattedDate date={post.data.pubDate} />
+											</span>
+											<a href={`/blog/${post.id}/`} class="archive-title">
+												{post.data.title}
+											</a>
+											{post.data.description && (
+												<span class="archive-desc"> — {post.data.description}</span>
+											)}
+										</li>
+									))}
+								</ul>
+							</section>
+						))
+					}
+				</section>
+				<Sidebar />
+			</div>
+		</main>
+		<Footer />
+
+		<style>
+			.page-title {
+				font-size: 1.9rem;
+				margin: 0 0 0.2em;
+				border-bottom: 3px solid var(--accent);
+				padding-bottom: 0.3em;
+			}
+			.page-intro {
+				color: var(--muted);
+				font-style: italic;
+				margin-bottom: 1.5em;
+			}
+			.year-section {
+				margin-bottom: 2em;
+			}
+			.year-heading {
+				font-size: 1.4rem;
+				color: var(--accent);
+				border-bottom: 1px solid var(--rule);
+				padding-bottom: 0.2em;
+				margin: 0 0 0.6em;
+			}
+			.archive-list {
+				list-style: none;
+				margin: 0;
+				padding: 0;
+			}
+			.archive-list li {
+				padding: 0.55em 0;
+				border-bottom: 1px dotted var(--rule);
+				line-height: 1.45;
+			}
+			.archive-list li:last-child {
+				border-bottom: none;
+			}
+			.archive-date {
+				display: inline-block;
+				min-width: 120px;
+				color: var(--muted);
+				font-size: 0.9rem;
+			}
+			.archive-title {
+				font-weight: 600;
+			}
+			.archive-desc {
+				color: var(--muted);
+			}
+			@media (max-width: 720px) {
+				.archive-date {
+					display: block;
+					min-width: 0;
+					margin-bottom: 0.1em;
+				}
+			}
+		</style>
+	</body>
+</html>

@@ -1,0 +1,109 @@
+---
+import { Image } from 'astro:assets';
+import { SITE_TITLE } from '../consts';
+import HeaderLink from './HeaderLink.astro';
+import Headshot from '../assets/headshot.jpeg';
+---
+
+<header class="masthead">
+	<div class="masthead-inner">
+		<a href="/" class="brand">
+			<Image
+				src={Headshot}
+				alt={SITE_TITLE}
+				width={112}
+				height={112}
+				class="brand-mark"
+			/>
+			<span class="brand-text">
+				<span class="brand-title"><span class="brand-prompt">~$</span>{SITE_TITLE}</span>
+			</span>
+		</a>
+	</div>
+</header>
+<nav class="topnav">
+	<div class="topnav-inner">
+		<HeaderLink href="/">Home</HeaderLink>
+		<HeaderLink href="/about">About</HeaderLink>
+		<HeaderLink href="mailto:contact@jordanmartinez.net" class="contact">Contact</HeaderLink>
+	</div>
+</nav>
+
+<style>
+	.masthead {
+		color: #fff;
+	}
+	.masthead-inner {
+		width: 1100px;
+		max-width: calc(100% - 2em);
+		margin: 0 auto;
+		padding: 1.4em 1em;
+		background: var(--accent);
+		border-bottom: 4px solid #c4703a;
+	}
+	.brand {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.8em;
+		color: #fff;
+		text-decoration: none;
+	}
+	.brand:hover { text-decoration: none; color: #fff; }
+	.brand-mark {
+		display: block;
+		width: 56px;
+		height: 56px;
+		object-fit: cover;
+		border-radius: 50%;
+		flex-shrink: 0;
+	}
+	.brand-text {
+		display: flex;
+		flex-direction: column;
+		line-height: 1.1;
+	}
+	.brand-title {
+		font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+		font-size: 1.7rem;
+		font-weight: 600;
+		letter-spacing: 0;
+	}
+	.brand-prompt {
+		color: #c4703a;
+		margin-right: 0.5em;
+	}
+	.topnav-inner {
+		width: 1100px;
+		max-width: calc(100% - 2em);
+		margin: 0 auto;
+		padding: 0 1em;
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0;
+		background: #232323;
+		border-bottom: 1px solid #111;
+	}
+	.topnav-inner :global(a) {
+		display: inline-block;
+		padding: 0.7em 1em;
+		color: #ddd;
+		font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+		font-size: 0.9rem;
+		font-weight: 500;
+		letter-spacing: 0;
+		text-decoration: none;
+		border-bottom: 3px solid transparent;
+	}
+	.topnav-inner :global(a:hover),
+	.topnav-inner :global(a.active) {
+		color: #fff;
+		background: #2a2a2a;
+		border-bottom-color: #c4703a;
+	}
+	@media (max-width: 720px) {
+		.brand-mark { width: 44px; height: 44px; }
+		.brand-title { font-size: 1.4rem; }
+		.brand-tagline { font-size: 0.85rem; }
+		.topnav-inner :global(a) { padding: 0.6em 0.7em; font-size: 0.75rem; }
+	}
+</style>

@@ -1,0 +1,133 @@
+---
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import FormattedDate from '../components/FormattedDate.astro';
+import Header from '../components/Header.astro';
+import Sidebar from '../components/Sidebar.astro';
+
+type Props = CollectionEntry<'blog'>['data'];
+
+const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={title} description={description} />
+	</head>
+	<body>
+		<Header />
+		<main>
+			<div class="layout">
+				<article class="post">
+					<header class="post-header">
+						<h1>{title}</h1>
+						<p class="byline">
+							<FormattedDate date={pubDate} />
+							<span class="badge">Article</span>
+							{
+								updatedDate && (
+									<span class="updated">
+										&middot; updated <FormattedDate date={updatedDate} />
+									</span>
+								)
+							}
+						</p>
+					</header>
+					{
+						heroImage && (
+							<figure class="hero-image">
+								<Image width={1020} height={510} src={heroImage} alt="" />
+							</figure>
+						)
+					}
+					<div class="prose">
+						<slot />
+					</div>
+					<p class="ai-disclosure">
+						<span class="ai-prefix">//</span> This article was written with AI assistance and edited by me.
+					</p>
+				</article>
+				<Sidebar />
+			</div>
+		</main>
+		<Footer />
+
+		<style>
+			.post-header {
+				border-bottom: 3px solid var(--accent);
+				padding-bottom: 0.6em;
+				margin-bottom: 1.2em;
+			}
+			.post-header h1 {
+				font-size: 2.1rem;
+				margin: 0 0 0.3em;
+				line-height: 1.15;
+			}
+			.byline {
+				color: var(--muted);
+				margin: 0;
+				font-size: 0.95rem;
+			}
+			.byline :global(time) {
+				color: #c4703a;
+				font-weight: 500;
+			}
+			.badge {
+				display: inline-block;
+				font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+				font-size: 0.7rem;
+				font-weight: 600;
+				letter-spacing: 0.5px;
+				color: #c4703a;
+				border: 1px solid #c4703a;
+				padding: 1px 6px;
+				margin-left: 0.7em;
+				vertical-align: 1px;
+			}
+			.updated { color: var(--muted); }
+			.hero-image {
+				margin: 0 0 1.4em;
+			}
+			.hero-image img {
+				display: block;
+				width: 100%;
+				height: auto;
+				border: 1px solid var(--rule);
+			}
+			.prose {
+				font-size: 1.05rem;
+				line-height: 1.7;
+			}
+			.prose :global(h2) {
+				margin-top: 1.4em;
+				border-bottom: 1px solid var(--rule);
+				padding-bottom: 0.2em;
+			}
+			.prose :global(h3) {
+				margin-top: 1.2em;
+			}
+			.prose :global(img) {
+				border: 1px solid var(--rule);
+				margin: 0.5em 0;
+			}
+			.prose :global(figure) {
+				margin: 1em 0;
+			}
+			.ai-disclosure {
+				margin-top: 2.5em;
+				padding-top: 1em;
+				border-top: 1px solid var(--rule);
+				font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+				font-size: 0.8rem;
+				color: var(--muted);
+			}
+			.ai-prefix {
+				color: #c4703a;
+				margin-right: 0.4em;
+			}
+		</style>
+	</body>
+</html>
