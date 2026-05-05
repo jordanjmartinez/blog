@@ -9,21 +9,30 @@ const subpath = pathname.match(/[^\/]+/g);
 const isActive = href === pathname || href === '/' + (subpath?.[0] || '');
 ---
 
-<a href={href} class:list={[className, { active: isActive }]} {...props}>
-	{isActive && <><span class="prompt">&gt;</span><span class="cursor">|</span></>}<span class="label"><slot /></span>
+<a href={href} class:list={[className, { active: isActive }]} {...props} style="text-decoration:none">
+	<span class="prompt" aria-hidden="true" style={isActive ? undefined : 'visibility:hidden'}>&gt;</span><span class="cursor" aria-hidden="true" style={isActive ? undefined : 'visibility:hidden'}>|</span><span class="label"><slot /></span>
 </a>
 <style>
 	a {
 		display: inline-block;
 		text-decoration: none;
 	}
-	.prompt {
+	.prompt,
+	.cursor {
+		display: inline-block;
 		color: #c4703a;
+		text-decoration: none;
+		visibility: hidden;
+	}
+	.prompt { margin-right: 0.4em; }
+	.cursor {
 		margin-right: 0.4em;
 	}
-	.cursor {
-		color: #c4703a;
-		margin-right: 0.4em;
+	a.active .prompt,
+	a.active .cursor {
+		visibility: visible;
+	}
+	a.active .cursor {
 		animation: cursor-blink 1.05s step-end infinite;
 	}
 	a.active {

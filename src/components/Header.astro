@@ -107,13 +107,14 @@ import HeaderBg from '../assets/pexels-tima-miroshnichenko-5380837.jpg';
 		font-weight: 500;
 		letter-spacing: 0;
 		text-decoration: none;
-		border-bottom: 3px solid transparent;
 	}
-	.topnav-inner :global(a:hover),
+	.topnav-inner :global(a:hover) {
+		color: #f5f5f5;
+		text-decoration: none;
+	}
 	.topnav-inner :global(a.active) {
 		color: #fff;
-		background: #2a2a2a;
-		border-bottom-color: #c4703a;
+		text-decoration: none;
 	}
 	@media (max-width: 720px) {
 		.brand-title { font-size: 1.8rem; }
