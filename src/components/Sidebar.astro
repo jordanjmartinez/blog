@@ -147,6 +147,7 @@ const recent = posts.slice(0, 6);
 		border: 1px solid var(--rule);
 		border-right: none;
 		background: #fff;
+		outline: none;
 	}
 	.search button,
 	.mailing-list button {
@@ -159,10 +160,16 @@ const recent = posts.slice(0, 6);
 		font-size: 0.85rem;
 		letter-spacing: 0;
 		cursor: pointer;
+		outline: none;
 	}
 	.search button:hover,
 	.mailing-list button:hover {
 		background: #a35a2c;
+	}
+	.search:focus-within,
+	.mailing-list:focus-within {
+		outline: 2px solid #c4703a;
+		outline-offset: 0;
 	}
 	.search-results {
 		list-style: none;
