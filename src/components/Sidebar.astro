@@ -49,14 +49,11 @@ const recent = posts.slice(0, 6);
 				};
 				const render = (items) => {
 					if (!items.length) {
-						resultsEl.innerHTML = '<li class="search-empty">no results</li>';
+						resultsEl.innerHTML = '<li class="search-empty">No results</li>';
 						return;
 					}
 					resultsEl.innerHTML = items.map((i) => `
-						<li>
-							<a href="${i.url}">${i.meta.title || i.url}</a>
-							<p>${i.excerpt}</p>
-						</li>
+						<li><a href="${i.url}">${i.meta.title || i.url}</a></li>
 					`).join('');
 				};
 				let timer;
