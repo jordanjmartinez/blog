@@ -1,8 +1,6 @@
 ---
-import { Image } from 'astro:assets';
 import { SITE_TITLE } from '../consts';
 import HeaderLink from './HeaderLink.astro';
-import Headshot from '../assets/headshot.jpeg';
 import HeaderBg from '../assets/pexels-tima-miroshnichenko-5380837.jpg';
 ---
 
@@ -10,13 +8,6 @@ import HeaderBg from '../assets/pexels-tima-miroshnichenko-5380837.jpg';
 	<div class="masthead-inner">
 		<img class="masthead-bg" src={HeaderBg.src} alt="" aria-hidden="true" />
 		<a href="/" class="brand">
-			<Image
-				src={Headshot}
-				alt={SITE_TITLE}
-				width={112}
-				height={112}
-				class="brand-mark"
-			/>
 			<span class="brand-text">
 				<span class="brand-title">{SITE_TITLE}</span>
 				<span class="brand-tagline"><span class="brand-tagline-prefix">//</span> security &middot; news &middot; blog</span>
@@ -71,15 +62,6 @@ import HeaderBg from '../assets/pexels-tima-miroshnichenko-5380837.jpg';
 		text-decoration: none;
 	}
 	.brand:hover { text-decoration: none; color: #fff; }
-	.brand-mark {
-		display: block;
-		width: 56px;
-		height: 56px;
-		object-fit: cover;
-		border-radius: 50%;
-		border: 2px solid #c4703a;
-		flex-shrink: 0;
-	}
 	.brand-text {
 		display: flex;
 		flex-direction: column;
@@ -134,7 +116,6 @@ import HeaderBg from '../assets/pexels-tima-miroshnichenko-5380837.jpg';
 		border-bottom-color: #c4703a;
 	}
 	@media (max-width: 720px) {
-		.brand-mark { width: 44px; height: 44px; }
 		.brand-title { font-size: 1.8rem; }
 		.brand-tagline { font-size: 0.85rem; }
 		.masthead-bg { width: 55%; opacity: 0.35; }

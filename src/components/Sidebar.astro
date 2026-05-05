@@ -24,9 +24,8 @@ const recent = posts.slice(0, 6);
 
 	<section class="widget">
 		<h3 class="widget-title">Search</h3>
-		<form action="https://duckduckgo.com/" method="get" target="_blank" class="search">
-			<input type="hidden" name="sites" value="" />
-			<input type="text" name="q" placeholder="Search this site…" aria-label="Search" />
+		<form class="search" role="search" onsubmit="event.preventDefault()">
+			<input type="text" name="q" placeholder="Search posts…" aria-label="Search" autocomplete="off" />
 			<button type="submit" aria-label="Search">
 				<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
 					<circle cx="11" cy="11" r="7"></circle>
@@ -34,6 +33,50 @@ const recent = posts.slice(0, 6);
 				</svg>
 			</button>
 		</form>
+		<ul class="search-results" aria-live="polite"></ul>
+		<script is:inline>
+			(() => {
+				const form = document.querySelector('.widget .search');
+				if (!form) return;
+				const input = form.querySelector('input[name="q"]');
+				const resultsEl = form.parentElement.querySelector('.search-results');
+				let pagefindPromise = null;
+				const loadPagefind = () => {
+					if (!pagefindPromise) {
+						pagefindPromise = import('/pagefind/pagefind.js').catch(() => null);
+					}
+					return pagefindPromise;
+				};
+				const render = (items) => {
+					if (!items.length) {
+						resultsEl.innerHTML = '<li class="search-empty">no results</li>';
+						return;
+					}
+					resultsEl.innerHTML = items.map((i) => `
+						<li>
+							<a href="${i.url}">${i.meta.title || i.url}</a>
+							<p>${i.excerpt}</p>
+						</li>
+					`).join('');
+				};
+				let timer;
+				input.addEventListener('input', (e) => {
+					clearTimeout(timer);
+					const q = e.target.value.trim();
+					if (!q) { resultsEl.innerHTML = ''; return; }
+					timer = setTimeout(async () => {
+						const pf = await loadPagefind();
+						if (!pf) {
+							resultsEl.innerHTML = '<li class="search-empty">search index not built yet</li>';
+							return;
+						}
+						const search = await pf.search(q);
+						const items = await Promise.all(search.results.slice(0, 5).map((r) => r.data()));
+						render(items);
+					}, 180);
+				});
+			})();
+		</script>
 	</section>
 
 	<section class="widget">
@@ -123,5 +166,36 @@ const recent = posts.slice(0, 6);
 	.search button:hover,
 	.mailing-list button:hover {
 		background: #a35a2c;
+	}
+	.search-results {
+		list-style: none;
+		margin: 0.6em 0 0;
+		padding: 0;
+	}
+	.search-results li {
+		padding: 0.5em 0;
+		border-bottom: 1px dotted var(--rule);
+		line-height: 1.35;
+	}
+	.search-results li:last-child { border-bottom: none; }
+	.search-results a {
+		font-weight: 600;
+		display: block;
+	}
+	.search-results p {
+		margin: 0.2em 0 0;
+		font-size: 0.85rem;
+		color: var(--muted);
+		line-height: 1.4;
+	}
+	.search-results :global(mark) {
+		background: rgba(196, 112, 58, 0.25);
+		color: inherit;
+		padding: 0 1px;
+	}
+	.search-empty {
+		font-size: 0.85rem;
+		color: var(--muted);
+		font-style: italic;
 	}
 </style>

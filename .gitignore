@@ -25,3 +25,6 @@ pnpm-debug.log*
 
 # claude code per-user overrides
 .claude/settings.local.json
+
+# pagefind dev mirror (built into dist/ on prod)
+public/pagefind/
