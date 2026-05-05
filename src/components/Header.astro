@@ -16,16 +16,17 @@ import Headshot from '../assets/headshot.jpeg';
 				class="brand-mark"
 			/>
 			<span class="brand-text">
-				<span class="brand-title"><span class="brand-prompt">~$</span>{SITE_TITLE}</span>
+				<span class="brand-title">{SITE_TITLE}</span>
+				<span class="brand-tagline"><span class="brand-tagline-prefix">//</span> security &middot; news &middot; blog</span>
 			</span>
 		</a>
 	</div>
 </header>
 <nav class="topnav">
 	<div class="topnav-inner">
-		<HeaderLink href="/">Home</HeaderLink>
-		<HeaderLink href="/about">About</HeaderLink>
-		<HeaderLink href="mailto:contact@jordanmartinez.net" class="contact">Contact</HeaderLink>
+		<HeaderLink href="/">home</HeaderLink>
+		<HeaderLink href="/about">about</HeaderLink>
+		<HeaderLink href="mailto:contact@jordanmartinez.net" class="contact">contact</HeaderLink>
 	</div>
 </nav>
 
@@ -55,6 +56,7 @@ import Headshot from '../assets/headshot.jpeg';
 		height: 56px;
 		object-fit: cover;
 		border-radius: 50%;
+		border: 2px solid #c4703a;
 		flex-shrink: 0;
 	}
 	.brand-text {
@@ -63,14 +65,24 @@ import Headshot from '../assets/headshot.jpeg';
 		line-height: 1.1;
 	}
 	.brand-title {
-		font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
-		font-size: 1.7rem;
+		font-family: 'JetBrains Mono', 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+		font-size: 2.4rem;
 		font-weight: 600;
 		letter-spacing: 0;
 	}
-	.brand-prompt {
+	.brand-tagline {
+		font-family: 'JetBrains Mono', 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+		font-size: 1rem;
+		font-weight: 400;
+		color: #aaa;
+		margin-top: 0.4em;
+		letter-spacing: 0.02em;
+	}
+	.brand-tagline-prefix {
+		font-family: 'JetBrains Mono', 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+		font-style: normal;
 		color: #c4703a;
-		margin-right: 0.5em;
+		margin-right: 0.2em;
 	}
 	.topnav-inner {
 		width: 1100px;
@@ -87,7 +99,7 @@ import Headshot from '../assets/headshot.jpeg';
 		display: inline-block;
 		padding: 0.7em 1em;
 		color: #ddd;
-		font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+		font-family: 'JetBrains Mono', 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
 		font-size: 0.9rem;
 		font-weight: 500;
 		letter-spacing: 0;
@@ -102,7 +114,7 @@ import Headshot from '../assets/headshot.jpeg';
 	}
 	@media (max-width: 720px) {
 		.brand-mark { width: 44px; height: 44px; }
-		.brand-title { font-size: 1.4rem; }
+		.brand-title { font-size: 1.8rem; }
 		.brand-tagline { font-size: 0.85rem; }
 		.topnav-inner :global(a) { padding: 0.6em 0.7em; font-size: 0.75rem; }
 	}

@@ -4,16 +4,6 @@ description: 'A first post. What this blog is and what to expect.'
 pubDate: 'May 03 2026'
 ---
 
-Welcome to my blog. Here's to new beginnings.
+Hello World. Every programmer's first program is the famous Hello World program. It is a beginner's venture into the world of programming. I believe this is justified as my first blog entry, since I too am venturing into a whole new unknown: the world of hackers and cybercrime. But I have no interest in offensive security. My goal is to become a blue teamer. I want to defend systems, not break them.
 
-Some of you may know me from elsewhere on the internet. Most of you don't, and that's fine. I'm Jordan. I graduated from the University of South Florida with a degree in Information Technology, and I'm currently working in IT while trying to break into cybersecurity. This blog is where I'm going to document that journey.
-
-What you'll find here: notes on what I'm studying, write-ups of the projects I'm building, and the occasional unfiltered reflection on what it's actually like to try to get into security from the outside. I'm not going to chase the security story-of-the-day. There are plenty of sites for that, and most of them are run by people who actually know what they're talking about. My focus is on the learning itself, in the open, with all the rough edges still attached.
-
-This is going to be an honest record. I'll be wrong about things. I'll figure out later that the way I solved a problem was the slow, ugly way. I'll re-read posts a year from now and wince. That's the point. The blog is for me first. If it turns out to be useful to someone else trying to do the same thing, even better.
-
-Visitors who want a bit more context can check the [About](/about) page. Recent posts and contact info live in the sidebar and footer.
-
-If you've got something to add, a correction, a resource I should know about, or just want to say hi, [send me an email](mailto:contact@jordanmartinez.net). I read every message.
-
-Thanks for stopping by. More to come.
+My goal with starting this blog is to document the beginning of a journey. To document every mistake, every milestone, and to show what it is like to go from a complete beginner to someone who is hopefully pretty good at their job. Thanks for stopping by. More to come.

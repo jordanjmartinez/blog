@@ -38,7 +38,7 @@ const posts = (await getCollection('blog')).sort(
 										</h2>
 										<p class="entry-meta">
 											<FormattedDate date={post.data.pubDate} />
-											<span class="badge">Article</span>
+											<span class="badge">article</span>
 										</p>
 									</header>
 									{post.data.heroImage && (
@@ -52,7 +52,7 @@ const posts = (await getCollection('blog')).sort(
 										<p class="entry-para">{post.data.description}</p>
 									)}
 									<p class="entry-more">
-										<a href={`/blog/${post.id}/`}><span class="more-prefix">&gt;&gt;</span> Continue reading</a>
+										<a href={`/blog/${post.id}/`}><span class="more-prefix">&gt;&gt;</span> continue reading</a>
 									</p>
 								</article>
 							);
@@ -97,7 +97,7 @@ const posts = (await getCollection('blog')).sort(
 			}
 			.badge {
 				display: inline-block;
-				font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+				font-family: 'JetBrains Mono', 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
 				font-size: 0.65rem;
 				font-weight: 600;
 				letter-spacing: 0.5px;
@@ -124,7 +124,7 @@ const posts = (await getCollection('blog')).sort(
 			.entry-more {
 				margin: 0;
 				clear: both;
-				font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+				font-family: 'JetBrains Mono', 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
 				font-size: 0.85rem;
 			}
 			.entry-more a {
