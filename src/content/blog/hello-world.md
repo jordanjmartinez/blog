@@ -10,4 +10,4 @@ The same is true in cybersecurity. Every professional starts as a beginner who h
 
 This post is my Hello World. My first step venturing into the world of hacktivists, nation-state actors, and cybercriminals.
 
-The goal of this blog is to document the beginning of my career: every mistake, every milestone, and the journey from a complete beginner to someone who has built real expertise. Thanks for stopping by my blog. Subscribe for more to come.
+The goal of this blog is to document the beginning of my career: every mistake, every milestone, and the journey from a complete beginner to someone with real experience.
