@@ -26,7 +26,7 @@ and it is hashed with the same algorithm every time, it will always produce the 
 
 That predictability is what makes password cracking possible.
 
-## Wordlists and rockyou.txt
+## Wordlists and `rockyou.txt`
 
 One common way to crack hashes is with a wordlist.
 
@@ -36,9 +36,9 @@ One of the most famous wordlists is:
 
 `rockyou.txt`
 
-rockyou.txt came from the 2009 RockYou breach, where millions of user passwords were exposed because they were stored in plain text. The list contains over 14 million real-world passwords.
+`rockyou.txt` came from the 2009 RockYou breach, where millions of user passwords were exposed because they were stored in plain text. The list contains over 14 million real-world passwords.
 
-Because the passwords came from real users, rockyou.txt is useful for understanding common password habits. It contains many weak, reused, and predictable passwords based on common patterns.
+Because the passwords came from real users, `rockyou.txt` is useful for understanding common password habits. It contains many weak, reused, and predictable passwords based on common patterns.
 
 ## Basic John the Ripper Syntax
 
