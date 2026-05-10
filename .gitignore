@@ -23,8 +23,11 @@ pnpm-debug.log*
 # jetbrains setting folder
 .idea/
 
-# claude code per-user overrides
-.claude/settings.local.json
+# claude code local state (settings, scheduled task locks, etc.)
+.claude/
+
+# favicon design source files (kept locally, not in repo)
+src/assets/Blog favicons/
 
 # pagefind dev mirror (built into dist/ on prod)
 public/pagefind/

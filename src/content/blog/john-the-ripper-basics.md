@@ -26,7 +26,7 @@ and it is hashed with the same algorithm every time, it will always produce the 
 
 That predictability is what makes password cracking possible.
 
-## Wordlists and `rockyou.txt`
+## Wordlists and rockyou.txt
 
 One common way to crack hashes is with a wordlist.
 
