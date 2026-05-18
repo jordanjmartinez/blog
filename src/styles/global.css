@@ -112,11 +112,27 @@ code {
 
 pre {
 	padding: 1em;
-	background: #1e1e1e;
-	color: #eee;
+	background: var(--rule-soft);
+	color: var(--ink);
 	overflow-x: auto;
+	border: 1px solid var(--rule);
 	border-radius: 2px;
 	font-size: 0.9em;
+}
+pre.astro-code {
+	background: var(--rule-soft) !important;
+	color: var(--ink) !important;
+	border: 1px solid var(--rule);
+}
+pre.astro-code span {
+	color: var(--ink) !important;
+}
+pre.plain-output {
+	background: var(--rule-soft);
+	color: var(--ink);
+	border: 1px solid var(--rule);
+	font-family: 'JetBrains Mono', 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+	white-space: pre;
 }
 pre > code {
 	all: unset;
