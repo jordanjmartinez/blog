@@ -6,7 +6,7 @@ pubDate: 'May 10 2026'
 
 Today I started learning about the basics of John the Ripper. It is a popular and well-known hash-cracking tool. I will dive into some pre-requisites and basic knowledge of cryptography terms before I cover the basics of the tool.
 
-## Hashing
+## Understanding Hashes
 
 Most modern systems do not store user passwords in plain text. Instead, they store a hashed version of the password.
 
@@ -18,37 +18,35 @@ For example, if a user’s password is hashed, the system stores the hash instea
 
 Hashing is also deterministic. That means the same input will always produce the same output when the same hashing algorithm is used.
 
-So if the password is:
-
-`letmein`
-
-and it is hashed with the same algorithm every time, it will always produce the same hash.
+So if the password is `letmein` and it is hashed with the same algorithm every time, it will always produce the same hash.
 
 That predictability is what makes password cracking possible.
 
-## Wordlists and rockyou.txt
+## Password Wordlists and rockyou.txt
 
 One common way to crack hashes is with a wordlist.
 
 A wordlist is a file full of possible passwords. John reads each line, hashes it, and checks whether it matches the target hash.
 
-One of the most famous wordlists is:
-
-`rockyou.txt`
+One of the most famous wordlists is `rockyou.txt`.
 
 `rockyou.txt` came from the 2009 RockYou breach, where millions of user passwords were exposed because they were stored in plain text. The list contains over 14 million real-world passwords.
 
 Because the passwords came from real users, `rockyou.txt` is useful for understanding common password habits. It contains many weak, reused, and predictable passwords based on common patterns.
 
-## Basic John the Ripper Syntax
+## Basic John Syntax
 
 The basic John syntax looks like this:
 
-`john [options] [file path]`
+```bash
+john [options] [file path]
+```
 
 A common example is running John with a wordlist:
 
-`john --wordlist=/usr/share/wordlists/rockyou.txt hashes.txt`
+```bash
+john --wordlist=/usr/share/wordlists/rockyou.txt hashes.txt
+```
 
 In this command:
 
@@ -64,29 +62,25 @@ Windows systems commonly use password hashes known as NT hashes. You will also s
 
 To crack a Windows NT hash with John, you can use:
 
-`john --format=nt hashes.txt`
+```bash
+john --format=nt hashes.txt
+```
 
 If you want to use `rockyou.txt` as the wordlist, the command would look like this:
 
-`john --wordlist=/usr/share/wordlists/rockyou.txt --format=nt hashes.txt`
+```bash
+john --wordlist=/usr/share/wordlists/rockyou.txt --format=nt hashes.txt
+```
 
-The important option here is:
+The important option here is `--format=nt`. That tells John the hashes are Windows NT hashes.
 
-`--format=nt`
-
-That tells John the hashes are Windows NT hashes.
-
-## Cracking Linux /etc/shadow Hashes
+## Cracking Linux Shadow Hashes
 
 Linux handles password storage differently.
 
-User account information is stored in:
+User account information is stored in `/etc/passwd`.
 
-`/etc/passwd`
-
-Password hashes are stored in:
-
-`/etc/shadow`
+Password hashes are stored in `/etc/shadow`.
 
 The `/etc/passwd` file contains general user account details, such as usernames, user IDs, home directories, and login shells.
 
@@ -104,11 +98,15 @@ unshadow is a tool included with John the Ripper. It combines the `/etc/passwd` 
 
 The syntax is:
 
-`unshadow [path to passwd] [path to shadow]`
+```bash
+unshadow [path to passwd] [path to shadow]
+```
 
 For example:
 
-`unshadow local_passwd local_shadow > unshadowed.txt`
+```bash
+unshadow local_passwd local_shadow > unshadowed.txt
+```
 
 In this example:
 
@@ -122,7 +120,9 @@ That new file can now be passed to John.
 
 Once the files are combined, you can run John against the unshadowed file:
 
-`john --wordlist=/usr/share/wordlists/rockyou.txt --format=sha512crypt unshadowed.txt`
+```bash
+john --wordlist=/usr/share/wordlists/rockyou.txt --format=sha512crypt unshadowed.txt
+```
 
 Here, John is using the `rockyou.txt` wordlist and treating the hashes as sha512crypt, which is a common Linux password-hashing format.
 

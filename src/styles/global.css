@@ -109,18 +109,30 @@ code {
 	border: 1px solid var(--rule);
 	border-radius: 2px;
 }
+:not(pre) > code {
+	font-family: ui-monospace, SFMono-Regular, Consolas, 'Liberation Mono', Menlo, monospace;
+	font-size: 0.9em;
+	padding: 0.05em 0.25em;
+	border-radius: 4px;
+	background: #f5f5f5;
+	border: 1px solid #e0e0e0;
+}
 
 pre {
-	padding: 1em;
-	background: var(--rule-soft);
+	padding: 1.1em 1.2em;
+	background: #f5f5f5;
 	color: var(--ink);
 	overflow-x: auto;
+	white-space: pre-wrap;
+	word-break: break-word;
 	border: 1px solid var(--rule);
-	border-radius: 2px;
+	border-radius: 6px;
 	font-size: 0.9em;
+	line-height: 1.55;
+	margin: 1em 0 1.2em;
 }
 pre.astro-code {
-	background: var(--rule-soft) !important;
+	background: #f5f5f5 !important;
 	color: var(--ink) !important;
 	border: 1px solid var(--rule);
 }
@@ -128,7 +140,7 @@ pre.astro-code span {
 	color: var(--ink) !important;
 }
 pre.plain-output {
-	background: var(--rule-soft);
+	background: #f5f5f5;
 	color: var(--ink);
 	border: 1px solid var(--rule);
 	font-family: 'JetBrains Mono', 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
@@ -136,6 +148,7 @@ pre.plain-output {
 }
 pre > code {
 	all: unset;
+	white-space: inherit;
 }
 
 blockquote {

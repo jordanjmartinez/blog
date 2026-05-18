@@ -25,22 +25,13 @@ const posts = (await getCollection('blog')).sort(
 				<section class="content">
 					{
 						posts.map((post) => {
-							const firstPara = (post.body ?? '')
+							const teaserParas = (post.body ?? '')
 								.split(/\n\n+/)
 								.map((p) => p.trim())
-								.find((p) => p && !p.startsWith('#') && !p.startsWith('!['));
-							const TEASER_MAX = 280;
-							let teaser = firstPara ?? post.data.description ?? '';
-							if (teaser.length > TEASER_MAX) {
-								const slice = teaser.slice(0, TEASER_MAX);
-								const lastSentence = Math.max(
-									slice.lastIndexOf('. '),
-									slice.lastIndexOf('? '),
-									slice.lastIndexOf('! '),
-								);
-								teaser = lastSentence > 100
-									? slice.slice(0, lastSentence + 1)
-									: slice.replace(/\s+\S*$/, '') + '…';
+								.filter((p) => p && !p.startsWith('#') && !p.startsWith('!['))
+								.slice(0, 2);
+							if (teaserParas.length === 0 && post.data.description) {
+								teaserParas.push(post.data.description);
 							}
 							return (
 								<article class="entry">
@@ -58,7 +49,7 @@ const posts = (await getCollection('blog')).sort(
 											<Image width={720} height={360} src={post.data.heroImage} alt="" />
 										</a>
 									)}
-									<p class="entry-para">{teaser}</p>
+									{teaserParas.map((teaser) => <p class="entry-para">{teaser}</p>)}
 									<p class="entry-more">
 										<a href={`/blog/${post.id}/`}><span class="more-prefix">&gt;&gt;</span> continue reading</a>
 									</p>

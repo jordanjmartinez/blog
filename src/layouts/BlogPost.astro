@@ -55,6 +55,47 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 		</main>
 		<Footer />
 
+		<script>
+			const codeBlocks = document.querySelectorAll('.prose pre:not(.plain-output)');
+
+			codeBlocks.forEach((pre) => {
+				const code = pre.querySelector('code');
+				const text = code?.textContent ?? pre.textContent ?? '';
+				const frame = document.createElement('div');
+				const button = document.createElement('button');
+				const copyIcon = `
+					<svg viewBox="0 0 24 24" aria-hidden="true">
+						<rect x="9" y="9" width="10" height="10" rx="2"></rect>
+						<path d="M5 15V7a2 2 0 0 1 2-2h8"></path>
+					</svg>
+				`;
+				const copiedIcon = `
+					<svg viewBox="0 0 24 24" aria-hidden="true">
+						<path d="M20 6 9 17l-5-5"></path>
+					</svg>
+				`;
+
+				frame.className = 'code-frame';
+				button.className = 'copy-code';
+				button.type = 'button';
+				button.ariaLabel = 'Copy code';
+				button.title = 'Copy code';
+				button.innerHTML = copyIcon;
+				button.addEventListener('click', async () => {
+					await navigator.clipboard.writeText(text.trimEnd());
+					button.innerHTML = copiedIcon;
+					button.ariaLabel = 'Code copied';
+					window.setTimeout(() => {
+						button.innerHTML = copyIcon;
+						button.ariaLabel = 'Copy code';
+					}, 1500);
+				});
+
+				pre.parentNode?.insertBefore(frame, pre);
+				frame.append(pre, button);
+			});
+		</script>
+
 		<style>
 			.post-header {
 				border-bottom: 3px solid var(--accent);
@@ -115,6 +156,44 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 			}
 			.prose :global(figure) {
 				margin: 1em 0;
+			}
+			.prose :global(.code-frame) {
+				position: relative;
+				margin: 1em 0 1.2em;
+			}
+			.prose :global(.code-frame pre) {
+				margin: 0;
+				padding-right: 3.4rem;
+			}
+			.prose :global(.copy-code) {
+				position: absolute;
+				top: 50%;
+				right: 0.55rem;
+				transform: translateY(-50%);
+				border: 1px solid var(--rule);
+				border-radius: 4px;
+				background: var(--page);
+				color: var(--ink);
+				width: 2rem;
+				height: 2rem;
+				display: inline-flex;
+				align-items: center;
+				justify-content: center;
+				padding: 0;
+				cursor: pointer;
+			}
+			.prose :global(.copy-code svg) {
+				width: 1rem;
+				height: 1rem;
+				fill: none;
+				stroke: currentColor;
+				stroke-width: 2;
+				stroke-linecap: round;
+				stroke-linejoin: round;
+			}
+			.prose :global(.copy-code:hover) {
+				border-color: #c4703a;
+				color: #c4703a;
 			}
 			.ai-disclosure {
 				margin-top: 2.5em;

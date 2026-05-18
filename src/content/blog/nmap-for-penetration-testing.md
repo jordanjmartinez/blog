@@ -23,21 +23,21 @@ Before scanning, confirm what network you are connected to.
 
 Two useful commands are:
 
-`route`
+```bash
+route
+```
 
 This shows the default gateway and routing table.
 
-`ifconfig`
+```bash
+ifconfig
+```
 
 This shows your IP address and network interface information.
 
-An example local network might look like this:
+An example local network might look like `192.168.1.0/24`.
 
-`192.168.1.0/24`
-
-The `/24` means the network covers addresses from:
-
-`192.168.1.1` through `192.168.1.254`
+The `/24` means the network covers addresses from `192.168.1.1` through `192.168.1.254`.
 
 Understanding your network range matters because you do not want to accidentally scan systems outside the scope of your lab or authorized test.
 
@@ -49,7 +49,9 @@ Before scanning ports, it is common to find which hosts are alive.
 
 ARP discovery is useful on a local network.
 
-`sudo nmap -PR -sn 192.168.1.0/24`
+```bash
+sudo nmap -PR -sn 192.168.1.0/24
+```
 
 The `-PR` option tells Nmap to use ARP requests. The `-sn` option tells Nmap to do host discovery only and skip port scanning.
 
@@ -59,7 +61,9 @@ This is fast on a local subnet because ARP is how devices normally find each oth
 
 After finding live hosts, save them to a file:
 
-`nano iplist.txt`
+```bash
+nano iplist.txt
+```
 
 Example:
 
@@ -75,7 +79,9 @@ This lets you scan only live targets later.
 
 ICMP discovery can be useful when scanning a host outside your local network.
 
-`sudo nmap -PE -sn scanme.nmap.org`
+```bash
+sudo nmap -PE -sn scanme.nmap.org
+```
 
 The `-PE` option sends an ICMP Echo Request, similar to a normal ping.
 
@@ -85,7 +91,9 @@ The limitation is that firewalls may block ICMP. If a host does not respond, tha
 
 TCP-based discovery can help when ICMP is blocked.
 
-`sudo nmap -PA80 -sn scanme.nmap.org`
+```bash
+sudo nmap -PA80 -sn scanme.nmap.org
+```
 
 The `-PA80` option sends a TCP ACK packet to port 80. If the host replies with a TCP reset packet, Nmap knows the host is alive.
 
@@ -119,7 +127,9 @@ Nmap cannot determine whether the port is open or filtered. This is common with 
 
 A basic scan looks like this:
 
-`nmap 192.168.1.7`
+```bash
+nmap 192.168.1.7
+```
 
 By default, Nmap scans the top 1,000 most common TCP ports.
 
@@ -135,7 +145,9 @@ This tells us that SSH and HTTP are open. At this point, I would not assume eith
 
 Once you have saved live hosts into `iplist.txt`, you can scan the list:
 
-`nmap -iL iplist.txt`
+```bash
+nmap -iL iplist.txt
+```
 
 The `-iL` option tells Nmap to read targets from a file.
 
@@ -145,15 +157,21 @@ This is cleaner than scanning the entire subnet after host discovery.
 
 To scan for SSH:
 
-`nmap -p 22 -iL iplist.txt`
+```bash
+nmap -p 22 -iL iplist.txt
+```
 
 To scan for HTTP:
 
-`nmap -p 80 -iL iplist.txt`
+```bash
+nmap -p 80 -iL iplist.txt
+```
 
 To scan multiple ports:
 
-`nmap -p 21,22,23,80 -iL iplist.txt`
+```bash
+nmap -p 21,22,23,80 -iL iplist.txt
+```
 
 This is useful because you can quickly check which machines have specific services exposed.
 
@@ -163,7 +181,9 @@ A machine with FTP, Telnet, and HTTP open could be a strong target for further t
 
 An ACK scan can help identify firewall behavior:
 
-`sudo nmap -sA -iL iplist.txt`
+```bash
+sudo nmap -sA -iL iplist.txt
+```
 
 The `-sA` option checks whether ports are filtered or unfiltered.
 
@@ -173,7 +193,9 @@ This scan does not directly tell you if a port is open, but it can show whether 
 
 UDP is often overlooked, but important services use UDP.
 
-`sudo nmap -sU -iL iplist.txt`
+```bash
+sudo nmap -sU -iL iplist.txt
+```
 
 Examples of UDP services include:
 
@@ -187,7 +209,9 @@ Examples of UDP services include:
 
 Finding an open port is useful, but knowing what service is running is more useful.
 
-`sudo nmap -sV -iL iplist.txt`
+```bash
+sudo nmap -sV -iL iplist.txt
+```
 
 The `-sV` option asks Nmap to identify services and versions running on open ports.
 
@@ -211,7 +235,9 @@ Version detection is one of the most important scans in a penetration test becau
 
 Nmap can also attempt to identify the operating system of each host:
 
-`sudo nmap -O -iL iplist.txt`
+```bash
+sudo nmap -O -iL iplist.txt
+```
 
 Example findings might include:
 
@@ -230,16 +256,18 @@ Nmap timing is controlled with `-T`.
 
 Example:
 
-`nmap -T5 scanme.nmap.org`
+```bash
+nmap -T5 scanme.nmap.org
+```
 
 Timing levels:
 
-- `-T0`: Paranoid, very slow
-- `-T1`: Sneaky
-- `-T2`: Polite
-- `-T3`: Normal, default
-- `-T4`: Aggressive
-- `-T5`: Insane, fastest
+<pre class="plain-output">-T0  Paranoid, very slow
+-T1  Sneaky
+-T2  Polite
+-T3  Normal, default
+-T4  Aggressive
+-T5  Insane, fastest</pre>
 
 Faster scans finish quicker, but they are noisier and may be less accurate. Slower scans are quieter, but they can take a very long time.
 
@@ -249,19 +277,25 @@ Nmap includes options that can change how scan traffic appears on the network.
 
 ### Decoy Scan
 
-`sudo nmap 192.168.1.7 -D RND:20`
+```bash
+sudo nmap 192.168.1.7 -D RND:20
+```
 
 The `-D RND:20` option adds 20 random decoy IP addresses into the scan traffic.
 
 ### Randomize Host Order
 
-`sudo nmap -iL iplist.txt --randomize-hosts`
+```bash
+sudo nmap -iL iplist.txt --randomize-hosts
+```
 
 The `--randomize-hosts` option scans hosts in a random order instead of sequentially.
 
 ### Spoof MAC Address
 
-`sudo nmap 192.168.1.9 --spoof-mac 0`
+```bash
+sudo nmap 192.168.1.9 --spoof-mac 0
+```
 
 The `--spoof-mac 0` option randomizes your MAC address for the scan.
 
@@ -269,25 +303,29 @@ The `--spoof-mac 0` option randomizes your MAC address for the scan.
 
 Nmap includes the Nmap Scripting Engine, also called NSE. Scripts can gather deeper information and check for known vulnerabilities.
 
-On Kali, scripts are usually stored here:
-
-`/usr/share/nmap/scripts`
+On Kali, scripts are usually stored in `/usr/share/nmap/scripts`.
 
 Nmap also has an official script library online.
 
 The default script option is:
 
-`nmap -sC 192.168.1.7`
+```bash
+nmap -sC 192.168.1.7
+```
 
 A common beginner command combines default scripts with version detection:
 
-`nmap -sC -sV 192.168.1.7`
+```bash
+nmap -sC -sV 192.168.1.7
+```
 
 ## Vulnerability Scan
 
 Nmap can run a broader set of vulnerability detection scripts:
 
-`nmap --script vuln -iL iplist.txt`
+```bash
+nmap --script vuln -iL iplist.txt
+```
 
 This is an easy way to check many known vulnerabilities at once.
 
