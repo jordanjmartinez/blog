@@ -304,6 +304,8 @@ Vulnerability scripts are useful, but they are not perfect. A script result shou
 
 ## Final Thoughts
 
-Nmap is one of the most useful tools for learning penetration testing because it teaches you how to do reconnaissance and map out a network.
+Nmap is one of the best tools for reconnaissance because it helps pentesters build a clear picture of a network.
 
-The goal is not just to run commands, but to understand what each scan is trying to answer. The basic process is simple: find the systems, identify the open ports, understand the services behind them, and decide what needs a closer look.
+Its scanning options make it useful for discovering systems, identifying exposed services, and finding details that may point to potential vulnerabilities.
+
+The goal is not just to run scans, but to understand what each scan is trying to answer.
