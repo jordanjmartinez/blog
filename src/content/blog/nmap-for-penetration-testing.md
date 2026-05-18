@@ -302,36 +302,6 @@ Example vulnerability categories include:
 
 Vulnerability scripts are useful, but they are not perfect. A script result should be treated as a lead until it is validated.
 
-## A Basic Workflow
-
-A simple beginner workflow could look like this:
-
-1. Confirm your network range.
-2. Discover live hosts.
-3. Save live hosts into `iplist.txt`.
-4. Scan common TCP ports.
-5. Scan specific services of interest.
-6. Check UDP if needed.
-7. Run service and version detection.
-8. Run OS detection.
-9. Run relevant NSE scripts.
-10. Validate findings before reporting them.
-
-Example commands:
-
-```text
-route
-ifconfig
-sudo nmap -PR -sn 192.168.1.0/24
-nmap -iL iplist.txt
-sudo nmap -sV -iL iplist.txt
-sudo nmap -O -iL iplist.txt
-nmap --script vuln -iL iplist.txt
-nmap -sC -sV 192.168.1.7
-```
-
-This gives a clean starting point without making the process too complicated.
-
 ## Final Thoughts
 
 Nmap is one of the most useful tools for learning penetration testing because it teaches you how to do reconnaissance and map out a network.
