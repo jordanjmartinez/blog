@@ -245,7 +245,7 @@ Faster scans finish quicker, but they are noisier and may be less accurate. Slow
 
 ## Scan Behavior Options
 
-Nmap includes options that can change how scan traffic appears on the network. In a professional test, these should only be used when they are allowed by the rules of engagement.
+Nmap includes options that can change how scan traffic appears on the network.
 
 ### Decoy Scan
 
